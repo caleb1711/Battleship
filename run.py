@@ -239,6 +239,40 @@ def shoot_bullet():
     bullets_left -= 1
 
 
+def check_for_game_over():
+    """If all ships have been sunk or we run out of bullets its game over"""
+    global num_of_ships_sunk
+    global num_of_ships
+    global bullets_left
+    global game_over
+
+    if num_of_ships == num_of_ships_sunk:
+        print("Congrats you won!")
+        game_over = True
+    elif bullets_left <= 0:
+        print("Sorry, you lost! You ran out of bullets, try again next time!")
+        game_over = True
+
+
+def main():
+    """Main entry point of application that runs the game loop"""
+    global game_over
+
+    print("-----Welcome to Battleships-----")
+    print("You have 50 bullets to take down 8 ships, may the battle begin!")
+
+    create_grid()
+
+    while game_over is False:
+        print_grid()
+        print("Number of ships remaining: " + str(num_of_ships - num_of_ships_sunk))
+        print("Number of bullets left: " + str(bullets_left))
+        shoot_bullet()
+        print("----------------------------")
+        print("")
+        check_for_game_over()
+
+
     
         
        
