@@ -92,35 +92,66 @@ def try_to_place_ship_on_grid(row, col, direction, length):
 
 
 
-    def create_grid():
-        """Will create a 10x10 grid and randomly place down ships
-    of different sizes in different directions
-    """
+def create_grid():
+
+
+    """Will create a 10x10 grid and randomly place down ships
+    of different sizes in different directions"""
+    global grid
+    global grid_size
+    global num_of_ships
+    global ship_positions
+
+    random.seed(time.time())
+
+    rows, cols = (grid_size, grid_size)
+
+    grid = []
+    for r in range(rows):
+        row = []
+        for c in range(cols):
+            row.append(".")
+        grid.append(row)
+
+    num_of_ships_placed = 0
+
+    ship_positions = []
+
+    while num_of_ships_placed != num_of_ships:
+        random_row = random.randint(0, rows - 1)
+        random_col = random.randint(0, cols - 1)
+        direction = random.choice(["left", "right", "up", "down"])
+        ship_size = random.randint(3, 5)
+        if try_to_place_ship_on_grid(random_row, random_col, direction, ship_size):
+            num_of_ships_placed += 1
     
-        global grid
-        global grid_size
-        global num_of_ships
-        global ship_positions
+    
 
-        random.seed(time.time())
 
-        rows, cols = (grid_size, grid_size)
 
-        grid = []
-        for r in range(rows):
-            row = []
-            for c in range(cols):
-                row.append(".")
-            grid.append(row)
+def print_grid():
+    """Will print the grid with rows A-J and columns 0-9"""
+    global grid
+    global alphabet
 
-        num_of_ships_placed = 0
+    debug_mode = True
 
-        ship_positions = []
+    alphabet = alphabet[0: len(grid) + 1]
 
-        while num_of_ships_placed != num_of_ships:
-            random_row = random.randint(0, rows - 1)
-            random_col = random.randint(0, cols - 1)
-            direction = random.choice(["left", "right", "up", "down"])
-            ship_size = random.randint(3, 5)
-            if try_to_place_ship_on_grid(random_row, random_col, direction, ship_size):
-                num_of_ships_placed += 1
+    for row in range(len(grid)):
+        print(alphabet[row], end=") ")
+        for col in range(len(grid[row])):
+            if grid[row][col] == "O":
+                if debug_mode:
+                    print("O", end=" ")
+                else:
+                    print(".", end=" ")
+            else:
+                print(grid[row][col], end=" ")
+        print("")
+
+    print("  ", end=" ")
+    for i in range(len(grid[0])):
+        print(str(i), end=" ")
+    print("")
+       
