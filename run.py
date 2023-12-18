@@ -193,4 +193,52 @@ def accept_valid_bullet_placement():
 
 
 
+
+def check_for_ship_sunk(row, col):
+    """If all parts of a shit have been shot it is sunk and we later increment ships sunk"""
+    global ship_positions
+    global grid
+
+    for position in ship_positions:
+        start_row = position[0]
+        end_row = position[1]
+        start_col = position[2]
+        end_col = position[3]
+        if start_row <= row <= end_row and start_col <= col <= end_col:
+            # Ship found, now check if its all sunk
+            for r in range(start_row, end_row):
+                for c in range(start_col, end_col):
+                    if grid[r][c] != "X":
+                        return False
+    return True
+
+
+
+def shoot_bullet():
+    """Updates grid and ships based on where the bullet was shot"""
+    global grid
+    global num_of_ships_sunk
+    global bullets_left
+
+    row, col = accept_valid_bullet_placement()
+    print("")
+    print("----------------------------")
+
+    if grid[row][col] == ".":
+        print("You missed, no ship was shot")
+        grid[row][col] = "#"
+    elif grid[row][col] == "O":
+        print("You hit!", end=" ")
+        grid[row][col] = "X"
+        if check_for_ship_sunk(row, col):
+            print("A ship was completely sunk!")
+            num_of_ships_sunk += 1
+        else:
+            print("A ship was shot")
+
+    bullets_left -= 1
+
+
+    
+        
        
