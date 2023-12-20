@@ -165,7 +165,7 @@ def accept_valid_bullet_placement():
     col = -1
     while is_valid_placement is False:
        
-        placement = input("Enter row (A-J) and column (0-9) such as A3: ")
+        placement = input("Enter row (A-J) and column (0-9) such as A3: \n")
         placement = placement.upper()
         if len(placement) <= 1 or len(placement) > 2:
             print("Error: Please enter only one row and column such as A3")
@@ -275,7 +275,7 @@ def main():
     print("You have 50 bullets to take down 2 ships, may the battle begin!")
 
     create_grid()
-    name = input("Enter your Name ")
+    name = input("Enter your Name \n")
 
     while game_over is False:
         print_grid()
