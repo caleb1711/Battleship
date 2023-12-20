@@ -23,7 +23,7 @@ grid = [[]]
 # Global variable for grid size
 grid_size = 10
 # Global variable for number of ships to place
-num_of_ships = 8
+num_of_ships = 2
 # Global variable for bullets left
 bullets_left = 50
 # Global variable for game over
@@ -134,12 +134,11 @@ def print_grid():
     global grid
     global alphabet
 
-    debug_mode = True
+    debug_mode = False
 
     alphabet = alphabet[0: len(grid) + 1]
 
     for row in range(len(grid)):
-        print(alphabet[row], end=") ")
         for col in range(len(grid[row])):
             if grid[row][col] == "O":
                 if debug_mode:
@@ -165,16 +164,20 @@ def accept_valid_bullet_placement():
     row = -1
     col = -1
     while is_valid_placement is False:
+       
         placement = input("Enter row (A-J) and column (0-9) such as A3: ")
         placement = placement.upper()
-        if len(placement) <= 0 or len(placement) > 2:
+        if len(placement) <= 1 or len(placement) > 2:
             print("Error: Please enter only one row and column such as A3")
             continue
+        
+       
         row = placement[0]
         col = placement[1]
         if not row.isalpha() or not col.isnumeric():
             print("Error: Please enter letter (A-J) for row and (0-9) for column")
             continue
+        
         row = alphabet.find(row)
         if not (-1 < row < grid_size):
             print("Error: Please enter letter (A-J) for row and (0-9) for column")
@@ -249,9 +252,19 @@ def check_for_game_over():
     if num_of_ships == num_of_ships_sunk:
         print("Congrats you won!")
         game_over = True
+       
+
+        
+        
+
+    
+        
     elif bullets_left <= 0:
         print("Sorry, you lost! You ran out of bullets, try again next time!")
         game_over = True
+
+
+        
 
 
 def main():
@@ -259,9 +272,10 @@ def main():
     global game_over
 
     print("-----Welcome to Battleships-----")
-    print("You have 50 bullets to take down 8 ships, may the battle begin!")
+    print("You have 50 bullets to take down 2 ships, may the battle begin!")
 
     create_grid()
+    name = input("Enter your Name ")
 
     while game_over is False:
         print_grid()
@@ -271,6 +285,12 @@ def main():
         print("----------------------------")
         print("")
         check_for_game_over()
+
+    
+
+if __name__ == '__main__':
+    """Will only be called when program is run from terminal or an IDE like PyCharms"""
+    main()        
 
 
     
